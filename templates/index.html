@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Quality Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <div>
+            <p class="eyebrow">ElasticNet Regression</p>
+            <h1>Wine Quality Predictor</h1>
+        </div>
+    </header>
+
+    <main class="layout">
+        <section class="panel form-panel">
+            <div class="panel-heading">
+                <h2>Sample Features</h2>
+                <p>Enter red wine measurements to estimate quality.</p>
+            </div>
+            <form action="/predict" method="post" class="feature-grid">
+                {% for name, label, sample in features %}
+                <label class="field" for="{{ name }}">
+                    <span>{{ label }}</span>
+                    <input
+                        type="number"
+                        step="any"
+                        name="{{ name }}"
+                        id="{{ name }}"
+                        value="{{ form_values.get(name, sample) }}"
+                        required
+                    >
+                </label>
+                {% endfor %}
+                <button type="submit" class="primary-action">Predict Quality</button>
+            </form>
+        </section>
+
+        <aside class="side-stack">
+            <section class="panel result-panel">
+                <p class="eyebrow">Prediction</p>
+                {% if prediction is not none %}
+                    <div class="score">{{ prediction }}</div>
+                    <p>Estimated wine quality score.</p>
+                {% elif error %}
+                    <div class="error">Prediction failed</div>
+                    <p>{{ error }}</p>
+                {% else %}
+                    <div class="placeholder-score">--</div>
+                    <p>{% if model_ready %}Submit the form to generate a prediction.{% else %}Train the model before predicting.{% endif %}</p>
+                {% endif %}
+            </section>
+
+            <section class="panel metrics-panel">
+                <p class="eyebrow">Model Status</p>
+                {% if metrics %}
+                    <dl>
+                        <div><dt>RMSE</dt><dd>{{ "%.4f"|format(metrics.rmse) }}</dd></div>
+                        <div><dt>MAE</dt><dd>{{ "%.4f"|format(metrics.mae) }}</dd></div>
+                        <div><dt>R2</dt><dd>{{ "%.4f"|format(metrics.r2) }}</dd></div>
+                    </dl>
+                {% else %}
+                    <p>No evaluation metrics found yet.</p>
+                {% endif %}
+            </section>
+        </aside>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
