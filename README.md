@@ -1,6 +1,20 @@
-# Wine Quality ML Project
+# Wine Quality Prediction
 
 A staged machine learning project for red wine quality prediction with Flask, MLflow, and ElasticNet regression.
+
+The dataset contains **1599 samples** of red wine, each evaluated across **11 chemical attributes**. The goal is to predict the **quality rating** (sensory score) of the wine.
+
+## Features Breakdown
+
+| Attribute | Description |
+| --- | --- |
+| Fixed Acidity | Tartaric acid (g/L) influencing longevity. |
+| Volatile Acidity | Acetic acid (g/L) - high levels lead to a "vinegar" taste. |
+| Citric Acid | Adds freshness and flavor to the wine. |
+| Residual Sugar | Sugar remaining after fermentation. |
+| Alcohol (%) | Alcohol content by volume, a primary quality driver. |
+| Sulphates | Acts as an antimicrobial and preservative. |
+| pH | Measures the acidity/basicity on a logarithmic scale. |
 
 ## Project Preview
 
